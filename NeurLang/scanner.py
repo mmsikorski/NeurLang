@@ -21,3 +21,7 @@ class Scanner:
 
 
         return self.tokens
+
+    def scan_token(self):
+
+        pass
