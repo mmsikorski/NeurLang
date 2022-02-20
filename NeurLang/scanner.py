@@ -10,3 +10,14 @@ def is_alpha(char):
 
 def is_alphanumeric(char):
     return is_digit(char) or is_alpha(char)
+
+class Scanner:
+    def __init__(self):
+        self.tokens = []
+        pass
+
+
+    def scan_tokens(self):
+
+
+        return self.tokens
