@@ -19,7 +19,6 @@ class Scanner:
         self.current = 1
         self.source = None
         self.end = len(self.source)
-        pass
 
 
     def scan_tokens(self, source):
@@ -30,3 +29,15 @@ class Scanner:
     def scan_token(self):
 
         pass
+
+    def increse_current(self):
+        self.current +=1
+
+    def next_sign(self):
+        self.increse_current()
+
+        return self.source[self.current]
+
+    def sign(self):
+        
+        return self.source[self.current]
