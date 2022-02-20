@@ -1,3 +1,6 @@
+from .token import *
+
+
 def is_digit(char):
     return char >= "0" and char <= "9"
 
@@ -39,5 +42,5 @@ class Scanner:
         return self.source[self.current]
 
     def sign(self):
-        
+
         return self.source[self.current]
