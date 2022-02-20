@@ -1,7 +1,11 @@
 import sys
+from .scanner import *
 
 class NeurLang:
     def __init__(self, test=False):
+        self.test = test
+        self.args = sys.argv
+
         self.start(self.args)
 
     def start(self, path):
@@ -9,7 +13,7 @@ class NeurLang:
         if self.test == True:
             pass
         elif len(path) == 2:
-            self.run(self.load_file(path))
+            self.run(self.load_file(path[1]))
         else:
             print("test-case-action")
 
@@ -18,5 +22,5 @@ class NeurLang:
             return f.read()
 
     def run(self, source):
-        print("Run_OK")
-        pass
+        
+        scanner = Scanner(source)

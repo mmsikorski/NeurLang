@@ -1,5 +1,5 @@
 from .token import *
-
+from .token_type import *
 
 def is_digit(char):
     return char >= "0" and char <= "9"
