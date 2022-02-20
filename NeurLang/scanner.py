@@ -14,11 +14,16 @@ def is_alphanumeric(char):
 class Scanner:
     def __init__(self):
         self.tokens = []
+        self.line = 1
+        self.start = 1
+        self.current = 1
+        self.source = None
+        self.end = len(self.source)
         pass
 
 
-    def scan_tokens(self):
-
+    def scan_tokens(self, source):
+        self.source = source
 
         return self.tokens
 
