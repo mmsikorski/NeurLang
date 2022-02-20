@@ -23,6 +23,8 @@ class Scanner:
         self.source = None
         self.end = len(self.source)
 
+        self.keywords = {}
+
 
     def scan_tokens(self, source):
         self.source = source
