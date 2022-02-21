@@ -40,4 +40,5 @@ THIS = 36
 TRUE = 37
 VAR = 38
 WHILE = 39
-EOF = 40
+FUNC = 40
+EOF = 41

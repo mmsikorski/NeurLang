@@ -17,22 +17,23 @@ def is_alphanumeric(char):
 #
 # KEYWORDS
 KEYWORDS = {
-    "and": AND,
+    #"and": AND,
     "class": CLASS,
-    "else": ELSE,
-    "false": FALSE,
-    "for": FOR,
-    "fun": FUN,
-    "if": IF,
-    "nil": NIL,
-    "or": OR,
+    "func": FUNC,
+    #"else": ELSE,
+    #"false": FALSE,
+    #"for": FOR,
+    #"fun": FUN,
+    #"if": IF,
+    #"nil": NIL,
+    #"or": OR,
     "print": PRINT,
-    "return": RETURN,
-    "super": SUPER,
-    "this": THIS,
-    "true": TRUE,
-    "var": VAR,
-    "while": WHILE,
+    #"return": RETURN,
+    #"super": SUPER,
+    #"this": THIS,
+    #"true": TRUE,
+    #"var": VAR,
+    #"while": WHILE,
 }
 # KEYWORDS
 #
@@ -79,14 +80,51 @@ class Scanner:
 
         pass
 
-    def increse_current(self):
-        self.current +=1
+    def indentifier(self):
+        while(is_alphanumeric(self.peek())):
+            self.advance()
 
-    def next_sign(self):
-        self.increse_current()
+        text = self.source[self.start:self.current]
 
-        return self.source[self.current]
+        if text in KEYWORDS:
+            return KEYWORDS[text]
+        else:
+            return IDENTIFIER
 
-    def sign(self):
+    def add_token(self, type, literal = None):
 
-        return self.source[self.current]
+        if type == None:
+            return
+        text = self.source[self.start, self.current]
+
+        self.tokens.append(
+        Token(type = type, lexeme = lexeme, literal = literal, line = self.line)
+        )
+
+    def advance(self, spaces = 1):
+        self.current += spaces
+
+        return self.source[self.current - 1]
+
+    def peek_next(self):
+        if self.current + 1 >= len(self.source):
+            return "\0"
+        else:
+            return self.source[self.current + 1]
+
+    def match(self, expected):
+        if self.is_the_end():
+            return False
+
+        if self.source[self.current] != expected:
+            return False
+
+    def peek(self):
+
+        return "\0" if self.is_at_end() else self.source[self.current]
+
+    def is_at_end(self):
+        return self.current >= len(self.source)
+
+    def error(self, line, message):
+        pass
