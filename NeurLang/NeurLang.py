@@ -3,12 +3,17 @@ from .scanner import *
 
 class NeurLang:
     def __init__(self, test=False, path = None):
-        if path != None:
+        self.test = test
+        self.args = sys.argv
+
+        self.start(self.args)
+
+        """if path != None:
             self.test = test
             self.args = sys.argv
             self.start(self.args)
         else:
-            self.start(path)
+            self.start(path)"""
 
 
     def start(self, path):
@@ -25,5 +30,9 @@ class NeurLang:
             return f.read()
 
     def run(self, source):
-
         scanner = Scanner(source)
+        tokens = scanner.scan_tokens()
+
+
+        for token in tokens:
+            print(token)

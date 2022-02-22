@@ -17,23 +17,9 @@ def is_alphanumeric(char):
 #
 # KEYWORDS
 KEYWORDS = {
-    #"and": AND,
     "class": CLASS,
     "func": FUNC,
-    #"else": ELSE,
-    #"false": FALSE,
-    #"for": FOR,
-    #"fun": FUN,
-    #"if": IF,
-    #"nil": NIL,
-    #"or": OR,
     "print": PRINT,
-    #"return": RETURN,
-    #"super": SUPER,
-    #"this": THIS,
-    #"true": TRUE,
-    #"var": VAR,
-    #"while": WHILE,
 }
 # KEYWORDS
 #
@@ -44,7 +30,6 @@ class Scanner:
         self.start = 0
         self.current = 0
         self.source = source
-        self.end = len(self.source)
 
         #self.keywords = {}
         self.token_strings = {
@@ -88,9 +73,41 @@ class Scanner:
     def scan_token(self):
             char = self.advance()
             if char in self.token_strings:
+                self.add_token(type=self.token_strings[char]())
+            elif char == "\"":
                 self.add_token(*self.string())
+            elif is_digit(char):
+                self.add_token(*self.number())
             elif is_alpha(char):
-                self.add_token(type=self.identifier())
+                self.add_token(type=self.indentifier())
+            else:
+                print("Error")
+
+    def string(self):
+        while self.peek() != "\"" and not self.is_at_end():
+            if self.peek() == "\n":
+                self.line += 1
+            self.advance()
+
+
+        if self.is_at_end():
+            #print("STRING ERROR method")
+            return (None, None)
+
+        self.advance() #Here we increment current in order to close "
+
+        value = self.source[self.start+1: self.current-1]
+        return (STRING, value)
+
+    def number(self):
+        while is_digit(self.peek()):
+            self.advance()
+        if self.peek() == '.' and is_digit(self.peek_next()):
+            self.advance()
+        return (NUMBER, float(self.source[self.start:self.current]))
+
+
+
 
     def indentifier(self):
         while(is_alphanumeric(self.peek())):
@@ -103,16 +120,19 @@ class Scanner:
         else:
             return IDENTIFIER
 
+
     def add_token(self, type, literal = None):
 
         if type == None:
             return
-        text = self.source[self.start, self.current]
+        text = self.source[self.start: self.current]
 
         self.tokens.append(
-        Token(type = type, lexeme = lexeme, literal = literal, line = self.line)
+        Token(type = type, lexeme = text, literal = literal, line = self.line)
         )
 
+
+    #Methods below help us manipulate a source code.
     def advance(self, spaces = 1):
         self.current += spaces
 
@@ -137,6 +157,12 @@ class Scanner:
 
     def is_at_end(self):
         return self.current >= len(self.source)
+
+    def newline(self):
+
+        self.line += 1
+        return None
+
 
     def error(self, line, message):
         pass
