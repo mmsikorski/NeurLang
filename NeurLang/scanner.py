@@ -74,11 +74,23 @@ class Scanner:
 
     def scan_tokens(self):
 
+        while not self.is_at_end():
+            self.start = self.current
+            self.scan_token()
+
+
+        self.tokens.append(
+            Token(type=EOF, lexeme="", literal=None, line=self.line)
+        )
+
         return self.tokens
 
     def scan_token(self):
-
-        pass
+            char = self.advance()
+            if char in self.token_strings:
+                self.add_token(*self.string())
+            elif is_alpha(char):
+                self.add_token(type=self.identifier())
 
     def indentifier(self):
         while(is_alphanumeric(self.peek())):

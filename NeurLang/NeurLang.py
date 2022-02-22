@@ -6,10 +6,11 @@ class NeurLang:
         if path != None:
             self.test = test
             self.args = sys.argv
-
             self.start(self.args)
         else:
             self.start(path)
+
+
     def start(self, path):
 
         if self.test == True:
