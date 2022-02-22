@@ -2,12 +2,14 @@ import sys
 from .scanner import *
 
 class NeurLang:
-    def __init__(self, test=False):
-        self.test = test
-        self.args = sys.argv
+    def __init__(self, test=False, path = None):
+        if path != None:
+            self.test = test
+            self.args = sys.argv
 
-        self.start(self.args)
-
+            self.start(self.args)
+        else:
+            self.start(path)
     def start(self, path):
 
         if self.test == True:
@@ -22,5 +24,5 @@ class NeurLang:
             return f.read()
 
     def run(self, source):
-        
+
         scanner = Scanner(source)
